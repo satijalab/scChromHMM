@@ -1,0 +1,29 @@
+[package]
+name = "indus"
+version = "0.1.0"
+authors = ["Avi Srivastava <avi.srivastava@nyu.edu>", "Bingjie Zhang <bzhang@nygenome.org>", "Rahul Satija <rsatija@nygenome.org>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+csv = "1.1.5"
+bio = "0.33.0"
+log = "0.4.11"
+rand = "0.8.2"
+snap = "1.0.4"
+sprs = "0.10.0"
+clap = "2.33.3"
+flate2 = "1.0.20"
+crossbeam = "0.8.0"
+byteorder = "1.4.3"
+indicatif = "0.15.0"
+rust-htslib = "0.36.0"
+pretty_env_logger = "0.4.0"
+
+[dependencies.carina]
+git = "https://github.com/parazodiac/Carina"
+branch = "main"
+
+[dependencies.sce]
+git = "https://github.com/parazodiac/SingleCellExperiment"
