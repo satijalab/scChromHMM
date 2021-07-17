@@ -10,13 +10,12 @@ mod hmm;
 mod model;
 mod quantify;
 mod record;
-mod spatial;
 mod transform;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let matches = App::new("indus")
+    let matches = App::new("schrom")
         .version("0.1.0")
-        .author("Avi Srivastava")
+        .author("Avi Srivastava, Bingjie Zhang, Rahul Satija")
         .about("Generate summary stats for multimodal data.")
         .subcommand(
             SubCommand::with_name("hmm")
@@ -40,12 +39,19 @@ fn main() -> Result<(), Box<dyn Error>> {
                         .help("path to the anchors files. [Same order as fragments]"),
                 )
                 .arg(
-                    Arg::with_name("hmm")
-                        .long("hmm")
-                        .short("h")
+                    Arg::with_name("threads")
+                        .long("threads")
+                        .short("t")
                         .takes_value(true)
                         .required(true)
-                        .multiple(true)
+                        .help("number of threads to use"),
+                )
+                .arg(
+                    Arg::with_name("model")
+                        .long("model")
+                        .short("m")
+                        .takes_value(true)
+                        .required(true)
                         .help("path to the chromeHMM model.txt file"),
                 )
                 .arg(
@@ -54,7 +60,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                         .short("c")
                         .takes_value(true)
                         .required(true)
-                        .help("path to the file with cellular barcodes of common assay."),
+                        .help("path to the file with cellular barcodes of common assay"),
                 ),
         )
         .subcommand(
@@ -85,42 +91,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                         .help("path to the file with cellular barcodes of common assay."),
                 ),
         )
-        .subcommand(
-            SubCommand::with_name("autocorr")
-                .about("A subcommand to generate auto-correlation summary statistics.")
-                .arg(
-                    Arg::with_name("weights")
-                        .long("weights")
-                        .short("w")
-                        .takes_value(true)
-                        .required(true)
-                        .help("path to the weight matrix."),
-                )
-                .arg(
-                    Arg::with_name("values")
-                        .long("values")
-                        .short("v")
-                        .takes_value(true)
-                        .required(true)
-                        .help("path to the value matrix."),
-                )
-                .arg(
-                    Arg::with_name("method")
-                        .long("method")
-                        .short("m")
-                        .takes_value(true)
-                        .required(true)
-                        .possible_values(&["Moransi", "Gearyc"]),
-                )
-                .arg(
-                    Arg::with_name("output")
-                        .long("output")
-                        .short("o")
-                        .takes_value(true)
-                        .required(true)
-                        .help("path to the output file."),
-                ),
-        )
         .get_matches();
     pretty_env_logger::init_timed();
 
@@ -130,10 +100,6 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     if let Some(sub_m) = matches.subcommand_matches("transform") {
         transform::callback(&sub_m)?
-    }
-
-    if let Some(sub_m) = matches.subcommand_matches("autocorr") {
-        spatial::callback(&sub_m)?
     }
 
     Ok(())

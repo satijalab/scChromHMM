@@ -1,5 +1,5 @@
 [package]
-name = "indus"
+name = "schrom"
 version = "0.1.0"
 authors = ["Avi Srivastava <avi.srivastava@nyu.edu>", "Bingjie Zhang <bzhang@nygenome.org>", "Rahul Satija <rsatija@nygenome.org>"]
 edition = "2018"
@@ -12,7 +12,6 @@ bio = "0.33.0"
 log = "0.4.11"
 rand = "0.8.2"
 snap = "1.0.4"
-sprs = "0.10.0"
 clap = "2.33.3"
 flate2 = "1.0.20"
 crossbeam = "0.8.0"

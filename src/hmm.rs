@@ -9,7 +9,6 @@ use bio::data_structures::interval_tree::IntervalTree;
 use clap::ArgMatches;
 use crossbeam::queue::ArrayQueue;
 use indicatif::{ProgressBar, ProgressStyle};
-use sprs::indexing::SpIndex;
 use std::sync::{mpsc, Arc};
 
 use std::collections::HashMap;
@@ -250,11 +249,6 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
                                 bin_mat.append(&mut state);
                                 bin_mat.append(&mut indices);
 
-                                //let out_file = arc_out_path.join(format!("{}.mtx", arc_common_cells[cell_id]));
-                                //let mut mat = sprs::TriMat::new(((chr_len / WINDOW_SIZE) + 1, num_states));
-                                //for (x, y, z) in posterior.iter() {
-                                //    mat.add_triplet(*x, *y, *z);
-                                //}
                                 tx.send(Some((bin_mat, out_file)))
                                     .expect("Could not send mid data!");
                             }
@@ -310,25 +304,5 @@ pub fn write_binary(path: std::path::PathBuf, mat: Vec<u8>) -> Result<(), Box<dy
     // entries
     file.write_all(&mat)?;
 
-    Ok(())
-}
-
-pub fn write_matrix_market(
-    path: std::path::PathBuf,
-    mat: &sprs::CsMat<ProbT>,
-) -> Result<(), Box<dyn Error>> {
-    let (rows, cols, nnz) = (mat.rows(), mat.cols(), mat.nnz());
-    let f = std::fs::File::create(path)?;
-    let mut writer = std::io::BufWriter::new(f);
-
-    writeln!(writer, "%%MatrixMarket matrix coordinate real general",)?;
-
-    // dimensions and nnz
-    writeln!(writer, "{} {} {}", rows, cols, nnz)?;
-
-    // entries
-    for (val, (row, col)) in mat {
-        writeln!(writer, "{} {} {:.2}", row.index() + 1, col.index() + 1, val)?;
-    }
     Ok(())
 }
