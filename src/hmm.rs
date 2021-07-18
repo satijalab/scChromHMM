@@ -79,6 +79,8 @@ fn get_anchors(
 }
 
 pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
+    let num_threads: usize = sub_m.value_of("threads").unwrap().parse().unwrap();
+
     let hmm = model::get_hmm_params(&sub_m)?;
     info!("Read HMM model paramers: {:?}", hmm);
 
@@ -198,14 +200,13 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
             });
         } else {
             let out_path =
-                std::path::Path::new("/mnt/scratch1/avi/Indus/data/out").join(&chr_name);
+                std::path::Path::new(sub_m.value_of("output").unwrap()).join(&chr_name);
             std::fs::create_dir_all(&out_path).unwrap();
 
             let q = Arc::new(ArrayQueue::<usize>::new(num_common_cells));
             //(0..num_common_cells).filter(|&x| x == 2840).for_each(|x| q.push(x).unwrap());
             (0..num_common_cells).for_each(|x| q.push(x).unwrap());
 
-            let num_threads = 25;
             let (tx, rx) = mpsc::sync_channel(num_threads);
 
             let arc_hmm = Arc::new(&hmm);

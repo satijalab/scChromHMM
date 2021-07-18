@@ -236,7 +236,7 @@ mod tests {
         );
     }
 
-    //#[test]
+    #[test]
     fn test_fwd_bkw_full() {
         let path = std::path::PathBuf::from("/home/srivastavaa/parazodiac/Indus/data/model_12.txt");
         let file_reader = carina::file::bufreader_from_filepath(path).unwrap();

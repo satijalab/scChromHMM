@@ -135,7 +135,7 @@ impl Hmm {
 }
 
 pub fn get_hmm_params(sub_m: &ArgMatches) -> Result<Hmm, Box<dyn Error>> {
-    let hmm_file_path = carina::file::file_path_from_clap(sub_m, "hmm")?;
+    let hmm_file_path = carina::file::file_path_from_clap(sub_m, "model")?;
     let file_reader = carina::file::bufreader_from_filepath(hmm_file_path)?;
     let hmm = Hmm::new(file_reader);
 

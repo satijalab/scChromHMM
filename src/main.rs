@@ -55,6 +55,14 @@ fn main() -> Result<(), Box<dyn Error>> {
                         .help("path to the chromeHMM model.txt file"),
                 )
                 .arg(
+                    Arg::with_name("output")
+                        .long("output")
+                        .short("o")
+                        .takes_value(true)
+                        .required(true)
+                        .help("path to the output directory"),
+                )
+                .arg(
                     Arg::with_name("common_cells")
                         .long("common_cells")
                         .short("c")
