@@ -1,7 +1,7 @@
+use std::convert::TryInto;
 use std::error::Error;
 use std::io::Read;
 use std::io::Write;
-use std::convert::TryInto;
 use std::sync::{mpsc, Arc};
 
 use clap::ArgMatches;
