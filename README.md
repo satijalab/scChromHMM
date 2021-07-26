@@ -1,4 +1,4 @@
-# scChromHMM
+# scChromHMM [![Rust](https://github.com/satijalab/scChromHMM/actions/workflows/rust.yml/badge.svg)](https://github.com/satijalab/scChromHMM/actions/workflows/rust.yml)
 
 `scChromHMM` provides a suite of tools for the rapid processing of single-cell histone modification data to perform chromatin states analysis of the genome within each single-cell. It is an extention of bulk ChromHMM framework, which consumes the HMM model learned from ChromHMM and perform chromatin state analysis by running forward-backward algorithm for each single-cell.
 
