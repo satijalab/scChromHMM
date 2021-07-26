@@ -202,39 +202,39 @@ pub fn run_fwd_bkw(
 
 #[cfg(test)]
 mod tests {
-    #[test]
-    fn test_fwd_bkw() {
-        let path = std::path::PathBuf::from("/mnt/scratch1/avi/Indus/data/model_test.txt");
-        let file_reader = carina::file::bufreader_from_filepath(path).unwrap();
-        let hmm = crate::model::Hmm::new(file_reader);
-        let mut fprob = vec![vec![0.0; 2]; 3];
-        let mut post = Vec::new();
+    //#[test]
+    //fn test_fwd_bkw() {
+    //    let path = std::path::PathBuf::from("/mnt/scratch1/avi/Indus/data/model_test.txt");
+    //    let file_reader = carina::file::bufreader_from_filepath(path).unwrap();
+    //    let hmm = crate::model::Hmm::new(file_reader);
+    //    let mut fprob = vec![vec![0.0; 2]; 3];
+    //    let mut post = Vec::new();
 
-        crate::quantify::get_posterior(
-            vec![
-                vec![1.0, 0.0, 0.0],
-                vec![0.0, 1.0, 0.0],
-                vec![0.0, 0.0, 1.0],
-            ],
-            &hmm,
-            &mut fprob,
-            &mut post,
-        );
-        let mut mat = sprs::TriMat::new((3, 2));
-        post.into_iter()
-            .for_each(|(x, y, z)| mat.add_triplet(x, y, z));
-        let probs: Vec<String> = mat
-            .to_csr::<usize>()
-            .data()
-            .into_iter()
-            .map(|&x| format!("{:.4}", x))
-            .collect();
+    //    crate::quantify::get_posterior(
+    //        vec![
+    //            vec![1.0, 0.0, 0.0],
+    //            vec![0.0, 1.0, 0.0],
+    //            vec![0.0, 0.0, 1.0],
+    //        ],
+    //        &hmm,
+    //        &mut fprob,
+    //        &mut post,
+    //    );
+    //    let mut mat = sprs::TriMat::new((3, 2));
+    //    post.into_iter()
+    //        .for_each(|(x, y, z)| mat.add_triplet(x, y, z));
+    //    let probs: Vec<String> = mat
+    //        .to_csr::<usize>()
+    //        .data()
+    //        .into_iter()
+    //        .map(|&x| format!("{:.4}", x))
+    //        .collect();
 
-        assert_eq!(
-            probs,
-            ["0.9342", "0.0658", "0.6665", "0.3335", "0.1209", "0.8791"]
-        );
-    }
+    //    assert_eq!(
+    //        probs,
+    //        ["0.9342", "0.0658", "0.6665", "0.3335", "0.1209", "0.8791"]
+    //    );
+    //}
 
     #[test]
     fn test_fwd_bkw_full() {
