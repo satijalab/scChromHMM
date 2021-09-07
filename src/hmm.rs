@@ -111,11 +111,15 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
         .collect();
 
     let num_chrs = CHR_LENS.len();
-    info!("Found total {} chromosomes", num_chrs);
+    let chrs = match sub_m.is_present("onlyone") {
+        true => (0..1),
+        false => (0..num_chrs),
+    };
+    info!("Found total {} chromosomes", chrs.len());
 
     info!("Starting forward backward");
     //(0..num_chrs).rev().take(1).for_each(|chr_id| {
-    (0..num_chrs).rev().for_each(|chr_id| {
+    chrs.rev().for_each(|chr_id| {
         let chr_name = format!("chr{}", chr_id+1);
         let tids: Vec<u64> = frags.iter().map(|x| x.tid(&chr_name)).collect();
         info!("Working on {}", chr_name);

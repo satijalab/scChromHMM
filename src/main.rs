@@ -47,6 +47,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                         .help("number of threads to use"),
                 )
                 .arg(
+                    Arg::with_name("onlyone")
+                        .help("quantify only chromosome one")
+                        .long("onlyone")
+                )
+                .arg(
                     Arg::with_name("model")
                         .long("model")
                         .short("m")

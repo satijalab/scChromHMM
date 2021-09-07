@@ -236,36 +236,36 @@ mod tests {
     //    );
     //}
 
-    #[test]
-    fn test_fwd_bkw_full() {
-        let path = std::path::PathBuf::from("/home/srivastavaa/parazodiac/Indus/data/model_12.txt");
-        let file_reader = carina::file::bufreader_from_filepath(path).unwrap();
-        let hmm = crate::model::Hmm::new(file_reader);
-        let mut fprob = vec![vec![0.0; 12]; 5];
-        let mut post = Vec::new();
+    //#[test]
+    //fn test_fwd_bkw_full() {
+    //    let path = std::path::PathBuf::from("/home/srivastavaa/parazodiac/Indus/data/model_12.txt");
+    //    let file_reader = carina::file::bufreader_from_filepath(path).unwrap();
+    //    let hmm = crate::model::Hmm::new(file_reader);
+    //    let mut fprob = vec![vec![0.0; 12]; 5];
+    //    let mut post = Vec::new();
 
-        crate::quantify::get_posterior(
-            vec![
-                vec![1.0, 0.0, 0.0, 0.0, 0.0],
-                vec![1.0, 0.0, 0.0, 0.0, 0.0],
-                vec![0.0, 0.0, 0.0, 0.0, 0.0],
-                vec![0.0, 0.0, 0.0, 0.0, 0.0],
-                vec![1.0, 0.0, 0.0, 0.0, 0.0],
-            ],
-            &hmm,
-            &mut fprob,
-            &mut post,
-        );
+    //    crate::quantify::get_posterior(
+    //        vec![
+    //            vec![1.0, 0.0, 0.0, 0.0, 0.0],
+    //            vec![1.0, 0.0, 0.0, 0.0, 0.0],
+    //            vec![0.0, 0.0, 0.0, 0.0, 0.0],
+    //            vec![0.0, 0.0, 0.0, 0.0, 0.0],
+    //            vec![1.0, 0.0, 0.0, 0.0, 0.0],
+    //        ],
+    //        &hmm,
+    //        &mut fprob,
+    //        &mut post,
+    //    );
 
-        let probs: Vec<String> = post
-            .into_iter()
-            .rev()
-            .map(|x| format!("{:.4}", x.2))
-            .collect();
+    //    let probs: Vec<String> = post
+    //        .into_iter()
+    //        .rev()
+    //        .map(|x| format!("{:.4}", x.2))
+    //        .collect();
 
-        assert_eq!(
-            probs,
-            ["0.5616", "0.4384", "0.8942", "0.1058", "0.9050", "0.0950"]
-        );
-    }
+    //    assert_eq!(
+    //        probs,
+    //        ["0.5616", "0.4384", "0.8942", "0.1058", "0.9050", "0.0950"]
+    //    );
+    //}
 }
