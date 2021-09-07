@@ -49,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 .arg(
                     Arg::with_name("onlyone")
                         .help("quantify only chromosome one")
-                        .long("onlyone")
+                        .long("onlyone"),
                 )
                 .arg(
                     Arg::with_name("model")
