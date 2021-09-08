@@ -22,7 +22,12 @@ Once compiled the scChromHMM program can be run to generate the posterior probab
 ```{bash}
 $ target/release/schrom hmm -f <fragment_files> -m <hmm_model> -a <anchor_files> -c <reference_cells> -t <number_of_threads> -o <output_folder>
 ```
-**Note**: The order of fragment files should be the same as the anchor files. A toy example can be run using the data present in the example folder using the following command:
+**Note**: The order of fragment files should be the same as the anchor files. A toy example can be run using the data present in the example folder using the following command: (An extra flag `--onlyone` has been added to run the toy example on a subsequence of chromosome 1).
 ```
 RUST_BACKTRACE=full RUST_LOG="trace" /usr/bin/time target/release/schrom hmm -f example/h3k27ac_fragments.tsv.gz example/h3k27me3_fragments.tsv.gz example/h3k4me1_fragments.tsv.gz -m example/model_2.txt -a example/k27ac.txt example/k27me3.txt example/k4me1.txt -c example/cells.txt -t 10 -o output --onlyone
 ```
+
+# Transforming cell-wise probabilities into state-wise "short" representation
+
+# Importing the output posterior probabilities into R
+
