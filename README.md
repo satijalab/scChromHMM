@@ -18,3 +18,8 @@ $ cargo build --release
 ```
 
 # Running scChromHMM
+Once compiled the scChromHMM program can be run to generate the posterior probability distribution across the hidden states using the command:
+```{bash}
+$ target/release/schrom hmm -f <fragment_files> -m <hmm_model> -a <anchor_files> -c <reference_cells>
+```
+**Note** The order of fragment files should be the same as the anchor files.
