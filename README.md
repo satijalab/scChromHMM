@@ -35,7 +35,7 @@ $ target/release/schrom transform -c <reference_cells> -i <input_folder> -o <out
 The toy example can be run using the following command. **NOTE** An extra flag `--onlyone` has been added to run the toy example on a subsequence of chromosome 1.
 ```bash
 $ mkdir short_output
-$ RUST_BACKTRACE=full RUST_LOG="trace" /usr/bin/time target/release/schrom transform -c example/cells.txt -i output -o short_output
+$ RUST_BACKTRACE=full RUST_LOG="trace" /usr/bin/time target/release/schrom transform -c example/cells.txt -i output -o short_output --onlyone
 ```
 
 # Importing the posterior probabilities into R
