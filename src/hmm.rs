@@ -1,5 +1,5 @@
 use crate::config::ProbT;
-use crate::config::{CHR_LENS, WINDOW_SIZE};
+use crate::config::{CHR_LENS, CHR_LENS_SMALL, WINDOW_SIZE};
 use crate::fragment::Fragment;
 use crate::model;
 use crate::quantify;
@@ -111,9 +111,15 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
         .collect();
 
     let num_chrs = CHR_LENS.len();
-    let chrs = match sub_m.is_present("onlyone") {
-        true => (0..1),
-        false => (0..num_chrs),
+    let onlyone = sub_m.is_present("onlyone");
+
+    let (chrs, chr_lens) = match onlyone {
+        true => {
+            ((0..1), CHR_LENS_SMALL)
+        },
+        false => {
+            ((0..num_chrs), CHR_LENS)
+        },
     };
     info!("Found total {} chromosomes", chrs.len());
 
@@ -126,7 +132,7 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
 
         let range = Range {
             start: 0,
-            end: CHR_LENS[chr_id],
+            end: chr_lens[chr_id],
         };
         let assay_data: Vec<AssayRecords<ProbT>> = frags
             .iter_mut()
@@ -193,7 +199,7 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
                     observation_list
                 };
 
-                let observation_list = get_obv_list(0, CHR_LENS[chr_id] as usize);
+                let observation_list = get_obv_list(0, chr_lens[chr_id] as usize);
                 for observation in observation_list {
                     (0..observation.len()).for_each(|id| {
                         if observation[id] != 0.0 {
@@ -219,7 +225,7 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
             let arc_common_cells = Arc::new(&common_cells);
 
             let num_states = hmm.num_states();
-            let chr_len = CHR_LENS[chr_id] as usize;
+            let chr_len = chr_lens[chr_id] as usize;
             crossbeam::scope(|scope| {
                 for _ in 0..num_threads {
                     let tx = tx.clone();
