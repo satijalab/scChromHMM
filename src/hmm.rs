@@ -114,12 +114,8 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
     let onlyone = sub_m.is_present("onlyone");
 
     let (chrs, chr_lens) = match onlyone {
-        true => {
-            ((0..1), CHR_LENS_SMALL)
-        },
-        false => {
-            ((0..num_chrs), CHR_LENS)
-        },
+        true => ((0..1), CHR_LENS_SMALL),
+        false => ((0..num_chrs), CHR_LENS),
     };
     info!("Found total {} chromosomes", chrs.len());
 

@@ -96,6 +96,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                         .help("path to the scChromHMM output directory"),
                 )
                 .arg(
+                    Arg::with_name("onlyone")
+                        .help("quantify only chromosome one")
+                        .long("onlyone"),
+                )
+                .arg(
                     Arg::with_name("common_cells")
                         .long("common_cells")
                         .short("c")

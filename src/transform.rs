@@ -8,7 +8,7 @@ use clap::ArgMatches;
 use crossbeam::queue::ArrayQueue;
 use indicatif::{ProgressBar, ProgressStyle};
 
-use crate::config::CHR_LENS;
+use crate::config::{CHR_LENS, CHR_LENS_SMALL};
 use crate::hmm;
 
 pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
@@ -19,10 +19,14 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
         num_common_cells, common_cells[0]
     );
 
-    let num_states = 12;
     let num_threads = 4;
     let num_chrs = CHR_LENS.len();
-    info!("Found total {} chromosomes", num_chrs);
+    let onlyone = sub_m.is_present("onlyone");
+    let (num_states, chr_lens, chrs) = match onlyone {
+        true => (2, CHR_LENS_SMALL, (0..1)),
+        false => (12, CHR_LENS, (0..num_chrs)),
+    };
+    info!("Found total {} chromosomes", chr_lens.len());
 
     let in_path = carina::file::file_path_from_clap(&sub_m, "in_directory").unwrap();
     info!("Found input directory path: {:?}", in_path);
@@ -31,9 +35,10 @@ pub fn callback(sub_m: &ArgMatches) -> Result<(), Box<dyn Error>> {
     info!("Found output directory path: {:?}", out_path);
 
     info!("Starting to read");
-    (0..num_chrs).rev().for_each(|chr_id| {
+    //(0..num_chrs).rev().for_each(|chr_id| {
+    chrs.rev().for_each(|chr_id| {
         let chr_name = format!("chr{}", chr_id+1);
-        let num_bins = (CHR_LENS[chr_id] / 200) + 1;
+        let num_bins = (chr_lens[chr_id] / 200) + 1;
         info!("Working on {}", chr_name);
 
         let pbar = ProgressBar::new(num_common_cells as u64);
