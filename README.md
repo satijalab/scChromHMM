@@ -39,7 +39,7 @@ $ RUST_BACKTRACE=full RUST_LOG="trace" /usr/bin/time target/release/schrom trans
 ```
 
 # Importing the posterior probabilities into R
-The chromatin state wise, region by cells posterior probabilities of the toy example can be imported into an R environment using YYYY package as follows:
+The chromatin state wise, region by cells posterior probabilities of the toy example can be imported into the R environment using the following script:
 ```{R}
 library(Rcpp)
 sourceCpp("src-R/parse.cpp")
